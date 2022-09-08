@@ -47,7 +47,7 @@ Acesse localhost:8000 no seu navegador para visualizar a aplicação.
 ## Funcionalidades a serem implementadas.
 Neste teste, seu objetivo será desenvolver uma API REST.  Por tanto você deverá focar em construir apenas uma API, não se preocupe com a parte visual ou outras coisas que não sejam pertinentes.
 
-##### CRUD de produts
+##### CRUD de produtos
 Você deverá desenvolver as principais operações para o gerenciamento de um catálogo de produtos, que são:
 - Criação
 - Listagem
