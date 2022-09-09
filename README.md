@@ -39,7 +39,7 @@ Execute os comandos abaixo dentro do container:
 ```bash
 $ composer install
 $ php artisan key:generate
-$ php artisan migratebo
+$ php artisan migrate
 
 ```
 
