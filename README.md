@@ -11,6 +11,7 @@ Boa sorte!
 
 
 ## Objetivo
+co
 
 - Por meio de um API REST em Laravel, crie uma CRUD.
 - Após a execução da etapa anterior, crie um comando artisan que se comunicará com uma outra API para importar em seu banco de dados.
@@ -29,15 +30,17 @@ Copie o arquivo .env.example e renomeie para .env dentro da pasta raíz da aplic
 
 `$ cp .env.example .env`
 
-Após a criação do arquivo .env, acesse o container da aplicação para executar os comandos de configuração do Laravel. 
-Use o comando `$ docker exec -it adoorei_test_app sh`.
+Após a criação do arquivo .env, acesse o container da aplicação. 
+
+Para isso, use o comando `$ docker exec -it adoorei_test_app sh`.
 
 Execute os comandos abaixo dentro do container:
 
 ```bash
 $ composer install
 $ php artisan key:generate
-$ php artisan migrate
+$ php artisan migratebo
+
 ```
 
 Tudo certo para começar o teste! Após rodar os comandos listados acima seu ambiente estará pronto. 
