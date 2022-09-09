@@ -25,7 +25,7 @@ Para iniciar essa etapa de configuração do ambiente, é obrigatório ter o [Do
 
 Navegue até a pasta raíz do projeto e execute o comando: `$ docker compose up -d` para inicializar o container.
 
-Copie o arquivo .env.example e renomeie para .env dentro da pasta raíz da aplicação. Conforme exemplo abaixo:
+Copie o arquivo .env.example e renomeie para .env dentro da pasta raíz da aplicação. Caso esteja usando o Linux, você pode usar o comando abaixo:
 
 `$ cp .env.example .env`
 
