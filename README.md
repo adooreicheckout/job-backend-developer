@@ -23,7 +23,7 @@ Para iniciar o desenvolvimento, você deverá criar um Fork desse projeto. Obs: 
 
 Para iniciar essa etapa de configuração do ambiente, é obrigatório ter o [Docker](https://docs.docker.com/desktop/ "Docker") instalado em sua máquina. 
 
-Navegue até a pasta raíz do projeto e execute o comando: `$ docker-compose up -d` para inicializar o container.
+Navegue até a pasta raíz do projeto e execute o comando: `$ docker compose up -d` para inicializar o container.
 
 Copie o arquivo .env.example e renomeie para .env dentro da pasta raíz da aplicação. Conforme exemplo abaixo:
 
