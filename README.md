@@ -11,7 +11,6 @@ Boa sorte!
 
 
 ## Objetivo
-co
 
 - Por meio de um API REST em Laravel, crie uma CRUD.
 - Após a execução da etapa anterior, crie um comando artisan que se comunicará com uma outra API para importar em seu banco de dados.
