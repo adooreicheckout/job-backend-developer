@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ProductControllerIndexTest extends TestCase
@@ -29,7 +29,7 @@ class ProductControllerIndexTest extends TestCase
     public function test_index()
     {
         $response = $this->get(route('api.products.index'));
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -67,7 +67,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -99,7 +99,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -133,7 +133,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -144,6 +144,25 @@ class ProductControllerIndexTest extends TestCase
                 ->where('data.1.name', $this->products[5]->name)
                 ->where('data.1.category', $this->products[5]->category)
                 ->missing('data.2')
+                ->etc();
+        });
+    }
+
+    public function test_index_with_field_by_not_allowed_property()
+    {
+        $uri = route('api.products.index', [
+            'filter' => [
+                'description' => 'a',
+            ],
+        ]);
+
+        $response = $this->get($uri);
+        $response->assertStatus(Response::HTTP_BAD_GATEWAY);
+
+        $response->assertJson(function (AssertableJson $json) {
+            $json->missing('data')
+                ->where('message', 'Failed to list/filter the Products')
+                ->where('reason', 'Requested filter(s) `description` are not allowed. Allowed filter(s) are `id, name, category`.')
                 ->etc();
         });
     }
@@ -165,7 +184,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -206,7 +225,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -247,7 +266,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -270,6 +289,23 @@ class ProductControllerIndexTest extends TestCase
         });
     }
 
+    public function test_index_sort_by_not_allowed_property()
+    {
+        $uri = route('api.products.index', [
+            'sort' => ['description'],
+        ]);
+
+        $response = $this->get($uri);
+        $response->assertStatus(Response::HTTP_BAD_GATEWAY);
+
+        $response->assertJson(function (AssertableJson $json) {
+            $json->missing('data')
+                ->where('message', 'Failed to list/filter the Products')
+                ->where('reason', 'Requested sort(s) `description` is not allowed. Allowed sort(s) are `id, name, category`.')
+                ->etc();
+        });
+    }
+
     /*
      * expected
      * name     | category
@@ -286,7 +322,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -310,7 +346,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
@@ -334,7 +370,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->missing('data.0.category')->etc();
         });
@@ -362,7 +398,7 @@ class ProductControllerIndexTest extends TestCase
         ]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('data.0.category', $this->products[4]->category)
@@ -378,6 +414,23 @@ class ProductControllerIndexTest extends TestCase
         $response->assertJsonStructure(['data' => ['*' => ['category']]]);
     }
 
+    public function test_index_selected_not_allowed_property()
+    {
+        $uri = route('api.products.index', [
+            'fields' => ['products' => 'price_with_fee'],
+        ]);
+
+        $response = $this->get($uri);
+        $response->assertStatus(Response::HTTP_BAD_GATEWAY);
+
+        $response->assertJson(function (AssertableJson $json) {
+            $json->missing('data')
+                ->where('message', 'Failed to list/filter the Products')
+                ->where('reason', 'Requested field(s) `products.price_with_fee` are not allowed. Allowed field(s) are `products.name, products.price, products.description, products.category, products.image_url, products.created_at, products.updated_at, products.id`.')
+                ->etc();
+        });
+    }
+
     public function test_index_paginate_page_1()
     {
         Product::factory()->count(25)->create();
@@ -385,13 +438,14 @@ class ProductControllerIndexTest extends TestCase
         $uri = route('api.products.index', ['page' => 1]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 1)
                 ->where('from', 1)
                 ->where('last_page', 3)
                 ->where('to', 15)
                 ->where('total', 31)
+                ->has('data.0.name')
                 ->etc();
         });
     }
@@ -403,13 +457,14 @@ class ProductControllerIndexTest extends TestCase
         $uri = route('api.products.index', ['page' => 2]);
 
         $response = $this->get($uri);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->where('current_page', 2)
                 ->where('from', 16)
                 ->where('last_page', 3)
                 ->where('to', 30)
                 ->where('total', 31)
+                ->has('data.0.name')
                 ->etc();
         });
     }
@@ -426,7 +481,7 @@ class ProductControllerIndexTest extends TestCase
 
         $response = $this->get($uri);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(function (AssertableJson $json) {
             $json->missing('data.0.name')->etc();
         });
@@ -439,6 +494,26 @@ class ProductControllerIndexTest extends TestCase
                 ->where('last_page', 3)
                 ->where('to', 30)
                 ->where('total', 31)
+                ->has('data.0.category')
+                ->etc();
+        });
+    }
+
+    public function test_index_paginate_page_99_without_results()
+    {
+        Product::factory()->count(25)->create();
+
+        $uri = route('api.products.index', ['page' => 99]);
+
+        $response = $this->get($uri);
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(function (AssertableJson $json) {
+            $json->where('current_page', 99)
+                ->where('from', null)
+                ->where('last_page', 3)
+                ->where('to', null)
+                ->where('total', 31)
+                ->where('data', [])
                 ->etc();
         });
     }
