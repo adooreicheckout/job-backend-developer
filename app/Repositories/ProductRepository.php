@@ -19,7 +19,7 @@ class ProductRepository
     public function list(): QueryBuilder
     {
         return QueryBuilder::for($this->model)
-            ->defaultSort('+id')
+            ->defaultSort('id')
             ->allowedFields([
                 ...$this->model->getFillable(),
                 ...$this->model->getDates(),

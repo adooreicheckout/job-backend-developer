@@ -31,7 +31,7 @@ class ProductController extends Controller
             return response()->json($products);
         } catch (Throwable $e) {
             return response()->json([
-                'message' => "Failed to list/filter the Products",
+                'message' => 'Failed to list/filter the Products',
                 'reason' => $e->getMessage(),
             ], Response::HTTP_BAD_GATEWAY);
         }
