@@ -39,12 +39,14 @@ class ProductRepository
 
     public function create(array $properties): Product
     {
-        return $this->model->create($properties);
+        $productId = $this->model->create($properties)->id;
+        return $this->findOrFail($productId);
     }
 
     public function updateOrCreate(array $columnsToCheck, array $properties): Product
     {
-        return $this->model->updateOrCreate($columnsToCheck, $properties);
+        $productId = $this->model->updateOrCreate($columnsToCheck, $properties)->id;
+        return $this->findOrFail($productId);
     }
 
     public function update(int $id, array $properties): Product
@@ -52,7 +54,7 @@ class ProductRepository
         $product = $this->findOrFail($id);
         $product->update($properties);
 
-        return $product;
+        return $this->findOrFail($id);
     }
 
     public function delete(int $id): bool|null

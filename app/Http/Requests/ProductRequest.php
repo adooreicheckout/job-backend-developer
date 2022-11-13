@@ -23,7 +23,11 @@ class ProductRequest extends FormRequest
                 'max:255',
                 Rule::unique('products')->ignore($id, $idcolumn)
             ],
-            'price' => ['required', 'regex:/^\d*(\.\d{1,2})?$/'],
+            'price' => [
+                'required',
+                'regex:/^\d*(\.\d{1,2})?$/',
+                'gt:0',
+            ],
             'description' => ['required', 'string', 'max:3000'],
             'category' => ['required', 'string', 'max:255'],
             'image_url' => ['nullable', 'string', 'max:255'],
