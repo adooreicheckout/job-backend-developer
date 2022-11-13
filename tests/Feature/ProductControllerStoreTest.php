@@ -61,7 +61,6 @@ class ProductControllerStoreTest extends TestCase
                 ->where('category', $payload['category'])
                 ->where('price', $payload['price'])
                 ->where('description', $payload['description'])
-                ->where('image_url', null)
                 ->has('id')
                 ->has('created_at')
                 ->has('updated_at')
