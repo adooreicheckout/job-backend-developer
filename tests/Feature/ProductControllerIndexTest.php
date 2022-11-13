@@ -180,7 +180,7 @@ class ProductControllerIndexTest extends TestCase
     public function test_index_sort_by_name_asc()
     {
         $uri = route('api.products.index', [
-            'sort' => ['name'],
+            'sort' => 'name',
         ]);
 
         $response = $this->get($uri);
@@ -221,7 +221,7 @@ class ProductControllerIndexTest extends TestCase
     public function test_index_sort_by_category_desc()
     {
         $uri = route('api.products.index', [
-            'sort' => ['-category'],
+            'sort' => '-category',
         ]);
 
         $response = $this->get($uri);
@@ -262,7 +262,7 @@ class ProductControllerIndexTest extends TestCase
     public function test_index_sort_by_category_desc_and_name_asc()
     {
         $uri = route('api.products.index', [
-            'sort' => ['-category', 'name'],
+            'sort' => '-category,name',
         ]);
 
         $response = $this->get($uri);
@@ -292,7 +292,7 @@ class ProductControllerIndexTest extends TestCase
     public function test_index_sort_by_not_allowed_property()
     {
         $uri = route('api.products.index', [
-            'sort' => ['description'],
+            'sort' => 'description',
         ]);
 
         $response = $this->get($uri);
@@ -318,7 +318,7 @@ class ProductControllerIndexTest extends TestCase
     {
         $uri = route('api.products.index', [
             'filter' => ['name' => 'b'],
-            'sort' => ['-category'],
+            'sort' => '-category',
         ]);
 
         $response = $this->get($uri);
@@ -393,7 +393,7 @@ class ProductControllerIndexTest extends TestCase
     {
         $uri = route('api.products.index', [
             'filter' => ['name' => 'b'],
-            'sort' => ['-category'],
+            'sort' => '-category',
             'fields' => ['products' => 'category'],
         ]);
 
@@ -474,7 +474,7 @@ class ProductControllerIndexTest extends TestCase
         Product::factory()->count(25)->create();
 
         $uri = route('api.products.index', [
-            'sort' => ['-category'],
+            'sort' => '-category',
             'fields' => ['products' => 'category'],
             'page' => 2,
         ]);

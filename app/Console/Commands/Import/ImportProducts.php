@@ -76,6 +76,7 @@ class ImportProducts extends Command
         }
 
         $product['name'] = $product['title'];
+        $product['image_url'] = $product['image'];
 
         try {
             $validator = $this->productRepository->validate($product, $product['name'], 'name');
