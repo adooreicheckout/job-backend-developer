@@ -14,5 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('getproduct');
 });
+
+
+
+
+Route::view('getproduct', 'getproduct')->name('getproduct');
+Route::view('registerproduct', 'registerproduct')->name('registerproduct');
+Route::view('updateproduct', 'updateproduct')->name('updateproduct');
+
+Route::view('deleteupdate', 'deleteupdate')->name('deleteupdate');
+
+
+
+
